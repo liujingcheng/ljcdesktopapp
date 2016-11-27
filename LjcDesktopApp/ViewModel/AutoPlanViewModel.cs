@@ -148,9 +148,10 @@ namespace LjcDesktopApp.ViewModel
                     {
                         taskModel.PlanEndTime = endDate.ToString(dateFormat);
                     }
-                    else
+                    else if (taskModel.PlanEndTime != endDate.ToString(dateFormat))
+                        //多人任务但排的计划时间不一致时，分别显示
                     {
-                        taskModel.PlanEndTime += "/" + member + ":" + endDate.ToString(dateFormat);
+                        taskModel.PlanEndTime += "\n" + member + ":" + endDate.ToString(dateFormat);
                     }
 
                     lastEndTime = endTime;
