@@ -133,21 +133,24 @@ namespace LjcDesktopApp.ViewModel
                     continue;
                 }
 
+                //string dateFormat = "yyyy/MM/dd HH:mm:ss";
+                string dateFormat = "yyyy/MM/dd";
                 var firstStartTime = DateTime.Parse(subList.First().PlanStartTime);
                 DateTime lastEndTime = firstStartTime;
                 foreach (var taskModel in subList)
                 {
                     var startTime = lastEndTime;
-                    taskModel.PlanStartTime = startTime.ToString("yyyy/MM/dd HH:mm:ss");
+                    taskModel.PlanStartTime = startTime.ToString(dateFormat);
                     var spentDays = double.Parse(taskModel.PlanSpentDays);
                     var endTime = startTime.AddDays(spentDays);
+                    var endDate = endTime.Hour == 0 ? endTime.AddDays(-1) : endTime;
                     if (taskModel.PlanEndTime == null)
                     {
-                        taskModel.PlanEndTime = endTime.ToString("yyyy/MM/dd HH:mm:ss");
+                        taskModel.PlanEndTime = endDate.ToString(dateFormat);
                     }
                     else
                     {
-                        taskModel.PlanEndTime += "/" + member + ":" + endTime.ToString("yyyy/MM/dd HH:mm:ss");
+                        taskModel.PlanEndTime += "/" + member + ":" + endDate.ToString(dateFormat);
                     }
 
                     lastEndTime = endTime;
