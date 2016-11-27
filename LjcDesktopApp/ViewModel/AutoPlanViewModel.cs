@@ -143,9 +143,16 @@ namespace LjcDesktopApp.ViewModel
                     taskModel.PlanStartTime = startTime.ToString(dateFormat);
                     var spentDays = double.Parse(taskModel.PlanSpentDays);
 
-                    if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Saturday
+
+                    if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).ToString(dateFormat) == "2017/01/01"
+                            || startTime.AddDays(spentDays).ToString(dateFormat) == "2017/01/02"
+                            || startTime.AddDays(spentDays).ToString(dateFormat) == "2017/01/03")
+                    //元旦放假3天
+                    {
+                        spentDays += 3;
+                    }else if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Saturday
                             || startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Sunday)
-                            //周末两天休假
+                    //周末两天休假
                     {
                         spentDays += 2;
                     }
@@ -163,11 +170,17 @@ namespace LjcDesktopApp.ViewModel
                         taskModel.PlanEndTime += "\n" + member + ":" + endDate.ToString(dateFormat);
                     }
 
-                    if (endTime.DayOfWeek == DayOfWeek.Saturday && endTime.Hour == 0)
+                    if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).ToString(dateFormat) == "2017/01/01")
+                    //元旦放假3天
+                    {
+                        lastEndTime = endTime.AddDays(3);
+                    }
+                    else if (endTime.Hour == 0 && endTime.DayOfWeek == DayOfWeek.Saturday)
+                    //周末两天休假
                     {
                         lastEndTime = endTime.AddDays(2);
-
                     }
+                    
                     else
                     {
                         lastEndTime = endTime;
