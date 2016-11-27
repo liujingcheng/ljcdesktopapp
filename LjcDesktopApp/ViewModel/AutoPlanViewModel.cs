@@ -142,19 +142,36 @@ namespace LjcDesktopApp.ViewModel
                     var startTime = lastEndTime;
                     taskModel.PlanStartTime = startTime.ToString(dateFormat);
                     var spentDays = double.Parse(taskModel.PlanSpentDays);
+
+                    if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Saturday
+                            || startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Sunday)
+                            //周末两天休假
+                    {
+                        spentDays += 2;
+                    }
+
                     var endTime = startTime.AddDays(spentDays);
+
                     var endDate = endTime.Hour == 0 ? endTime.AddDays(-1) : endTime;
                     if (taskModel.PlanEndTime == null)
                     {
                         taskModel.PlanEndTime = endDate.ToString(dateFormat);
                     }
                     else if (taskModel.PlanEndTime != endDate.ToString(dateFormat))
-                        //多人任务但排的计划时间不一致时，分别显示
+                    //多人任务但排的计划时间不一致时，分别显示
                     {
                         taskModel.PlanEndTime += "\n" + member + ":" + endDate.ToString(dateFormat);
                     }
 
-                    lastEndTime = endTime;
+                    if (endTime.DayOfWeek == DayOfWeek.Saturday && endTime.Hour == 0)
+                    {
+                        lastEndTime = endTime.AddDays(2);
+
+                    }
+                    else
+                    {
+                        lastEndTime = endTime;
+                    }
                 }
             }
 
