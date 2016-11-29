@@ -133,12 +133,14 @@ namespace LjcDesktopApp.ViewModel
                     continue;
                 }
 
-                //string dateFormat = "yyyy/MM/dd HH:mm:ss";
-                string dateFormat = "yyyy/MM/dd";
+                string dateFormat = "yyyy/MM/dd HH:mm:ss";
+                //string dateFormat = "yyyy/MM/dd";
                 var firstStartTime = DateTime.Parse(subList.First().PlanStartTime);
                 DateTime lastEndTime = firstStartTime;
                 foreach (var taskModel in subList)
                 {
+                    taskModel.HolidayRemark = null;//先清空
+
                     var startTime = lastEndTime;
                     taskModel.PlanStartTime = startTime.ToString(dateFormat);
                     var spentDays = double.Parse(taskModel.PlanSpentDays);
