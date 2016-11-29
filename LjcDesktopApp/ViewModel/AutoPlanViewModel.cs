@@ -144,9 +144,18 @@ namespace LjcDesktopApp.ViewModel
                     var spentDays = double.Parse(taskModel.PlanSpentDays);
 
 
-                    if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/31"
-                            || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/01"
-                            || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/02")
+                    if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/08"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/09"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/10"
+                            || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/11")
+                    //搬家2天+周末2天
+                    {
+                        spentDays += 4;
+                        taskModel.HolidayRemark = "搬家2天+周末2天";
+                    }
+                    else if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/31"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/01"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/02")
                     //元旦放假3天
                     {
                         spentDays += 3;
@@ -173,7 +182,13 @@ namespace LjcDesktopApp.ViewModel
                         taskModel.PlanEndTime += "\n" + member + ":" + endDateStr;
                     }
 
-                    if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/31")
+                    if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/08")
+                    //搬家2天+周末2天
+                    {
+                        lastEndTime = endTime.AddDays(4);
+                        taskModel.HolidayRemark = endDateStr + "之后是搬家2天+周末2天";
+                    }
+                    else if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/31")
                     //元旦放假3天
                     {
                         lastEndTime = endTime.AddDays(3);
