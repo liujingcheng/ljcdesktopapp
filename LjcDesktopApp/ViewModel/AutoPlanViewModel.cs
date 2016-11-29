@@ -133,7 +133,8 @@ namespace LjcDesktopApp.ViewModel
                     continue;
                 }
 
-                string timeFormat = "yyyy/MM/dd HH:mm:ss";
+                string timeFormat = "yyyy/MM/dd";
+                //string timeFormat = "yyyy/MM/dd HH:mm:ss";
                 string dateFormat = "yyyy/MM/dd";
                 var firstStartTime = DateTime.Parse(subList.First().PlanStartTime);
                 DateTime lastEndTime = firstStartTime;
