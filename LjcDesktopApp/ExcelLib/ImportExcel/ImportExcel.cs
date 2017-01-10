@@ -136,7 +136,7 @@ namespace CanYouLib.ExcelLib
             }
             catch (Exception e)
             {
-                throw new Exception("打开Excel文件时出错:", e);
+                throw new Exception("打开Excel文件时出错:"+e.Message, e);
             }
         }
         /// <summary>

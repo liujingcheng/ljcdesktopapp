@@ -28,7 +28,7 @@ namespace LjcDesktopApp.ViewModel
                {
                    var importExcel = new ImportExcel();
                    var dialog =
-                       new Microsoft.Win32.OpenFileDialog { Filter = "excel|*.xls" };
+                       new Microsoft.Win32.OpenFileDialog { Filter = "excel|*.xls;*.xlsx" };
                    if (dialog.ShowDialog() == true)
                    {
                        _sourceFileName = dialog.FileName;
@@ -164,7 +164,10 @@ namespace LjcDesktopApp.ViewModel
                         spentDays += 3;
                         taskModel.HolidayRemark = "元旦放假3天";
                     }
-                    else if (startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/24"
+                    else if (startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/21"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/22"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/23"
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/24"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/25"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/26"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/27"
@@ -173,9 +176,7 @@ namespace LjcDesktopApp.ViewModel
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/30"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/31"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/02/01"
-                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/02/02"
-                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/02/03"
-                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/02/04")
+                          || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/02/02")
                     //春节假期
                     {
                         spentDays += 12;
@@ -214,7 +215,7 @@ namespace LjcDesktopApp.ViewModel
                         lastEndTime = endTime.AddDays(3);
                         taskModel.HolidayRemark = endDateStr + "之后是元旦3天假期";
                     }
-                    else if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/12/24")
+                    else if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/21")
                     //春节假期
                     {
                         lastEndTime = endTime.AddDays(12);
