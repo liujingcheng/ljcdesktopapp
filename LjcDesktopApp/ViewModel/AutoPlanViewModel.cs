@@ -26,16 +26,23 @@ namespace LjcDesktopApp.ViewModel
             {
                 return new RelayCommand(() =>
                {
-                   var importExcel = new ImportExcel();
-                   var dialog =
-                       new Microsoft.Win32.OpenFileDialog { Filter = "excel|*.xls;*.xlsx" };
-                   if (dialog.ShowDialog() == true)
+                   try
                    {
-                       _sourceFileName = dialog.FileName;
-                       var ds = importExcel.ImportDataSet(_sourceFileName, false, 1, 0);
-                       var dt = ds.Tables[0];
-                       _taskModels = ModelConverter<TaskModel>.ConvertToModel(dt);
-                       CalSchedule(_taskModels);
+                       var importExcel = new ImportExcel();
+                       var dialog =
+                           new Microsoft.Win32.OpenFileDialog { Filter = "excel|*.xls;*.xlsx" };
+                       if (dialog.ShowDialog() == true)
+                       {
+                           _sourceFileName = dialog.FileName;
+                           var ds = importExcel.ImportDataSet(_sourceFileName, false, 1, 0);
+                           var dt = ds.Tables[0];
+                           _taskModels = ModelConverter<TaskModel>.ConvertToModel(dt);
+                           CalSchedule(_taskModels);
+                       }
+                   }
+                   catch (Exception)
+                   {
+                       MessageBox.Show("1. 请确认Excel没有被其它进程占用；2. 请确认它是2003版本的xls");
                    }
                });
             }
