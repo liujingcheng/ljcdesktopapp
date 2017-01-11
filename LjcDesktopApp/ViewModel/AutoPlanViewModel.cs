@@ -52,9 +52,9 @@ namespace LjcDesktopApp.ViewModel
                 {
                     var sheetName = "Sheet1";
                     var exportExcel = new ExportExcel();
-
                     string rootPath = AppDomain.CurrentDomain.BaseDirectory;
-                    var fileId = Path.GetFileNameWithoutExtension(_sourceFileName) + DateTime.Now.ToString("yyyyMMddHHmmss");//避免文件重复
+                    var newFileNamePrifix = Path.GetFileNameWithoutExtension(_sourceFileName).TrimEnd('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+                    var fileId = Path.GetFileNameWithoutExtension(newFileNamePrifix) + DateTime.Now.ToString("yyyyMMddHHmmss");//避免文件重复
                     var tempFilePath = rootPath + "\\" + fileId + ".xls";//存放临时文件的路径
                     exportExcel.CreateExcel(sheetName, 1);
                     var docuSum = new DocumentSummary()
@@ -179,7 +179,7 @@ namespace LjcDesktopApp.ViewModel
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/02/02")
                     //春节假期
                     {
-                        spentDays += 12;
+                        spentDays += 13;
                         taskModel.HolidayRemark = "春节假期";
                     }
                     else if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Saturday
@@ -218,7 +218,7 @@ namespace LjcDesktopApp.ViewModel
                     else if (startTime.AddDays(spentDays).Hour == 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/21")
                     //春节假期
                     {
-                        lastEndTime = endTime.AddDays(12);
+                        lastEndTime = endTime.AddDays(13);
                         taskModel.HolidayRemark = endDateStr + "春节假期";
                     }
                     else if (endTime.Hour == 0 && endTime.DayOfWeek == DayOfWeek.Saturday)
