@@ -1106,7 +1106,7 @@ namespace CanYouLib.ExcelLib
         public void CreateExcel(string p_SheetName, int p_SheetCount)
         {
             //Todo:以下将来需要改为使用接口来创建 
-            _workbook = new XSSFWorkbook();
+            _workbook = new HSSFWorkbook();
             try
             {
                 if (p_SheetCount == 0)
