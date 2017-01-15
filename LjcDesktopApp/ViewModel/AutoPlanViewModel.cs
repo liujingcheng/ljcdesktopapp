@@ -105,6 +105,10 @@ namespace LjcDesktopApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// 自动排期（单任务支持的工作量范围：0.5-7）
+        /// </summary>
+        /// <param name="list"></param>
         private void CalSchedule(IList<TaskModel> list)
         {
             var members = new List<string>();
@@ -189,7 +193,7 @@ namespace LjcDesktopApp.ViewModel
                         spentDays += 13;
                         taskModel.HolidayRemark = "春节假期";
                     }
-                    else if (HasCrossedWeekend(startTime, spentDays))
+                    else if (HasCrossedWeekend(startTime, spentDays))//TODO:暂时只支持一个周末的跨跃，多周末待以后支持（或者约束工作量不能超过一周也行）
                     //周末两天休假
                     {
                         spentDays += 2;
@@ -252,8 +256,9 @@ namespace LjcDesktopApp.ViewModel
             var gapDays = 0.5;
             while (gapDays <= spentDays)
             {
-                if (startTime.AddDays(gapDays).Hour != 0 && startTime.AddDays(gapDays).DayOfWeek == DayOfWeek.Saturday//.Hour != 0代表其是从中午开始的情况（工作量是半天的）
-                               || startTime.AddDays(gapDays).DayOfWeek == DayOfWeek.Sunday)
+                var addedStart = startTime.AddDays(gapDays);
+                if (addedStart.Hour != 0 && addedStart.DayOfWeek == DayOfWeek.Saturday//.Hour != 0代表其是从中午开始的情况（工作量是半天的）
+                               || addedStart.DayOfWeek == DayOfWeek.Sunday)
                 {
                     return true;
                 }
