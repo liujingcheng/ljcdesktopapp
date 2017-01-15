@@ -189,8 +189,7 @@ namespace LjcDesktopApp.ViewModel
                         spentDays += 13;
                         taskModel.HolidayRemark = "春节假期";
                     }
-                    else if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Saturday
-                           || startTime.AddDays(spentDays).DayOfWeek == DayOfWeek.Sunday)
+                    else if (HasCrossedWeekend(startTime, spentDays))
                     //周末两天休假
                     {
                         spentDays += 2;
@@ -199,6 +198,7 @@ namespace LjcDesktopApp.ViewModel
 
                     var endTime = startTime.AddDays(spentDays);
 
+                    //.Hour == 0代表它是零点。如果endTime正好是周六零点，其实它也就是周五结束
                     var endDateStr = endTime.Hour == 0 ? endTime.AddDays(-1).ToString(timeFormat) : endTime.ToString(timeFormat);
                     if (taskModel.PlanEndTime == null)
                     {
@@ -228,7 +228,7 @@ namespace LjcDesktopApp.ViewModel
                         lastEndTime = endTime.AddDays(13);
                         taskModel.HolidayRemark = endDateStr + "春节假期";
                     }
-                    else if (endTime.Hour == 0 && endTime.DayOfWeek == DayOfWeek.Saturday)
+                    else if (endTime.Hour == 0 && endTime.DayOfWeek == DayOfWeek.Saturday)//.Hour == 0代表它是零点。如果endTime正好是周六零点，其实它也就是周五结束，且下个任务应从下周一开始
                     //周末两天休假
                     {
                         lastEndTime = endTime.AddDays(2);
@@ -241,6 +241,25 @@ namespace LjcDesktopApp.ViewModel
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 是否有跨跃了周末(目前只考虑到跨一个周末的情况）
+        /// </summary>
+        /// <returns></returns>
+        private bool HasCrossedWeekend(DateTime startTime, double spentDays)
+        {
+            var gapDays = 0.5;
+            while (gapDays <= spentDays)
+            {
+                if (startTime.AddDays(gapDays).Hour != 0 && startTime.AddDays(gapDays).DayOfWeek == DayOfWeek.Saturday//.Hour != 0代表其是从中午开始的情况（工作量是半天的）
+                               || startTime.AddDays(gapDays).DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return true;
+                }
+                gapDays += 0.5;
+            }
+            return false;
         }
 
     }
