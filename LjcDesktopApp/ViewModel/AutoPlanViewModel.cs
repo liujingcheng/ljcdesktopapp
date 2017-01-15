@@ -175,7 +175,7 @@ namespace LjcDesktopApp.ViewModel
                         spentDays += 3;
                         taskModel.HolidayRemark = "元旦放假3天";
                     }
-                    else if (startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/21"
+                    else if (startTime.AddDays(spentDays).Hour != 0 && startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2016/01/21"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/22"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/23"
                           || startTime.AddDays(spentDays).Date.ToString(dateFormat) == "2017/01/24"
