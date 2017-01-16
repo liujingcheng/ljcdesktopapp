@@ -202,7 +202,7 @@ namespace LjcDesktopApp.ViewModel
 
                     var endTime = startTime.AddDays(spentDays);
 
-                    //.Hour == 0代表它是零点。如果endTime正好是周六零点，其实它也就是周五结束
+                    //.Hour == 0代表它是零点。如果endTime正好是周六零点，其实它也就是周五结束，所以从日期上看的话要退后一天才符合常识理解
                     var endDateStr = endTime.Hour == 0 ? endTime.AddDays(-1).ToString(timeFormat) : endTime.ToString(timeFormat);
                     if (taskModel.PlanEndTime == null)
                     {
