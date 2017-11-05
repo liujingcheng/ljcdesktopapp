@@ -106,7 +106,7 @@ namespace LjcDesktopApp.ViewModel
         }
 
         /// <summary>
-        /// 自动排期（单任务支持的工作量范围：10分钟-7天）
+        /// 自动排期（单任务支持的工作量范围：2分钟-7天）
         /// </summary>
         /// <param name="list"></param>
         private void CalSchedule(IList<TaskModel> list)
@@ -258,7 +258,7 @@ namespace LjcDesktopApp.ViewModel
         /// <returns></returns>
         private bool HasCrossedWeekend(DateTime startTime, double spentDays)
         {
-            var gapDays = 0.001;
+            var gapDays = 0.001;//一天的0.001粒度是1.44分钟，意味着只要工作量大于2分钟都没问题
             while (gapDays <= spentDays)
             {
                 var addedStart = startTime.AddDays(gapDays);
