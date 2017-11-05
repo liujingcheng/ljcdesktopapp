@@ -106,7 +106,7 @@ namespace LjcDesktopApp.ViewModel
         }
 
         /// <summary>
-        /// 自动排期（单任务支持的工作量范围：0.5-7）
+        /// 自动排期（单任务支持的工作量范围：10分钟-7天）
         /// </summary>
         /// <param name="list"></param>
         private void CalSchedule(IList<TaskModel> list)
@@ -152,6 +152,11 @@ namespace LjcDesktopApp.ViewModel
                 foreach (var taskModel in subList)
                 {
                     taskModel.HolidayRemark = null;//先清空
+
+                    if (taskModel.TaskName.Contains("作业单要能够批量暂停与恢复"))
+                    {
+                        taskModel.HolidayRemark = null;//先清空
+                    }
 
                     var startTime = lastEndTime;
                     taskModel.PlanStartTime = startTime.ToString(timeFormat);
@@ -253,7 +258,7 @@ namespace LjcDesktopApp.ViewModel
         /// <returns></returns>
         private bool HasCrossedWeekend(DateTime startTime, double spentDays)
         {
-            var gapDays = 0.5;
+            var gapDays = 0.001;
             while (gapDays <= spentDays)
             {
                 var addedStart = startTime.AddDays(gapDays);
@@ -262,7 +267,7 @@ namespace LjcDesktopApp.ViewModel
                 {
                     return true;
                 }
-                gapDays += 0.5;
+                gapDays += 0.001;
             }
             return false;
         }
